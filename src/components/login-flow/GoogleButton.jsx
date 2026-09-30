@@ -1,6 +1,6 @@
 import React from "react";
 import { FcGoogle } from "react-icons/fc";
-import { GoogleOAuthProvider, useGoogleLogin } from "@react-oauth/google";
+import {  useGoogleLogin } from "@react-oauth/google";
 
 const GoogleLoginButton = () => {
   const login = useGoogleLogin({
