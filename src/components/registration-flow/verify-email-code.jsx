@@ -3,7 +3,7 @@ import { MdOutlineMailOutline } from "react-icons/md";
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { verifyEmailOtp, sendMobileOtp} from "../../api/registerApi";
-import { sendFirebasePhoneOtp } from "../../api/firebasePhoneAuth";
+
 import { useRegistration } from "../../context/RegistrationContext";
 
 const VerifyEmailCode = ({ onNext }) => {
