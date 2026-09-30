@@ -1,4 +1,8 @@
-body {
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -10,4 +14,60 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+} */
+
+/* Mobile phone input */
+.mobile-phone-input {
+  display: flex !important;
+  width: 100%;
+  gap: 8px;
+}
+
+/* Country code box */
+.mobile-phone-input
+  .react-international-phone-country-selector-button {
+  height: 48px;
+  min-width: 100px;
+
+  border: 2px solid #d1d5db !important;
+  border-radius: 8px !important;
+
+  background-color: white !important;
+
+  transition: all 0.2s ease;
+}
+
+/* Phone number box */
+.mobile-phone-input .react-international-phone-input {
+  height: 48px;
+  width: 100%;
+
+  border: 2px solid #d1d5db !important;
+  border-radius: 8px !important;
+
+  padding: 0 16px;
+
+  font-size: 14px;
+
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+/* Focus effect */
+.mobile-phone-input
+  .react-international-phone-input:focus {
+  border-color: #3b82f6 !important;
+  box-shadow: 2px 0 3px 3px rgba(59, 130, 246, 0.15);
+}
+
+.mobile-phone-input
+  .react-international-phone-country-selector-button__flag {
+  display: none !important;
+}
+
+/* Country selector focus */
+.mobile-phone-input
+  .react-international-phone-country-selector-button:focus {
+  border-color: #3b82f6 !important;
+  box-shadow: 2px 0 3px 3px rgba(59, 130, 246, 0.15);
 }
