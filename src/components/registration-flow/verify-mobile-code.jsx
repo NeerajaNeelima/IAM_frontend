@@ -34,7 +34,7 @@ const VerifyMobileCode = ({onNext}) => {
     if (!/^\d*$/.test(value)) return;
 
     const digit = value.slice(-1);
-
+    setRegisterErrorMsg('')
     const newOtp = [...otp];
     newOtp[index] = digit;
 
@@ -228,7 +228,7 @@ const VerifyMobileCode = ({onNext}) => {
 
   return (
     <>
-    {loading && (
+    {isVerifying && (
       <div className="fixed inset-0 z-[9999] bg-black/80 flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
           <div className="w-12 h-12 border-4 border-gray-300 border-t-blue-600 rounded-full animate-spin"></div>

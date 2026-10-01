@@ -8,6 +8,7 @@ import { LoginProvider } from "./context/LoginContext";
 import Login from "./components/login-flow/login";
 
 import { Toaster } from "react-hot-toast";
+import Profile from "./components/profile/profile";
 
 
 
@@ -41,7 +42,20 @@ function App() {
               </RegistrationProvider>
             }
           />
+          {/* Profile */}
+          <Route
+            path="/profile"
+            element={
+              <LoginProvider>
+                <Profile/>
+              </LoginProvider>
+              
+            }
+          />
+        
         </Routes>
+
+        
       </div>
     </BrowserRouter>
   );

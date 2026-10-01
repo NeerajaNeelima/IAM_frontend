@@ -34,10 +34,10 @@ const Form_Fields = ({ onNext }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const isPasswordValid =
-  password.length >= 8 &&
-  /\d/.test(password) &&
-  /[A-Z]/.test(password) &&
-  /[^A-Za-z0-9]/.test(password);
+  password.length >= 8 && // length
+  /\d/.test(password) && // 1 number
+  /[A-Z]/.test(password) && // 1 upper case letter
+  /[^A-Za-z0-9]/.test(password); // 1 special character
 
   const selectedCountryCode = `+${getCountryCallingCode(country)}`;
 

@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState } from 'react';
 import { login,sendOTP,verifyOTP,forgotPassword,verifyResetOtp,resetPassword } from '../api/loginApi';
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const LoginContext = createContext(null);
 
@@ -15,7 +16,7 @@ export const LoginProvider = ({ children }) => {
   const [loginLoading,setLoginLoding]=useState(false);
   const [user, setUser] = useState(null);
   const [rememberMe, setRememberMe] = useState(false);
-
+  const navigate = useNavigate();
   const [forgotEmail, setForgotEmail] = useState("");
 const [resetToken, setResetToken] = useState("");
 const [forgotPasswordLoading, setForgotPasswordLoading] = useState(false);
@@ -68,7 +69,12 @@ const [forgotPasswordError, setForgotPasswordError] = useState("");
   const handleVerify = async(selectedMethod,otp)=>{
     try{
       setLoginLoding(true)
-    await verifyOTP(selectedMethod,otp,rememberMe)}
+    const response = await verifyOTP(selectedMethod,otp,rememberMe)
+    setUser(response.user);
+
+    navigate("/profile");
+  }
+    
     catch(error){
       setErrorMsg(error.message)
     }finally{
@@ -167,6 +173,7 @@ const [forgotPasswordError, setForgotPasswordError] = useState("");
         handleContinue,
         handleVerify,
         errormsg,
+        setErrorMsg,
         loginLoading,
 
         //User Details

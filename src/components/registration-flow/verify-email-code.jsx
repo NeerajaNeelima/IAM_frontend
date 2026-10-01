@@ -10,7 +10,7 @@ const VerifyEmailCode = ({ onNext }) => {
  
 
   const inputRefs = useRef([]);
-  const {registererrormsg,setRegisterErrorMsg,loading}=useRegistration();
+  const {registererrormsg,setRegisterErrorMsg,loading,}=useRegistration();
   const [otp, setOtp] = useState(Array(6).fill(""));
   const [isError, setIsError] = useState(false);
   const [isVerifying, setIsVerifying] = useState(false);
@@ -28,7 +28,7 @@ const VerifyEmailCode = ({ onNext }) => {
     if (!/^\d*$/.test(value)) return;
     
     const digit = value.slice(-1);
-
+    setRegisterErrorMsg('')
     const newOtp = [...otp];
     newOtp[index] = digit;
 
@@ -163,9 +163,6 @@ const VerifyEmailCode = ({ onNext }) => {
     setTimeout(() => {
       inputRefs.current[0]?.focus();
     }, 0);
-
-    // API call for resend can go here
-    console.log("Verification code resent");
   };
 
   const handleVerify = async (enteredOtp) => {
@@ -201,7 +198,7 @@ const VerifyEmailCode = ({ onNext }) => {
 
   return (
     <>
-    {loading && (
+    {isVerifying && (
       <div className="fixed inset-0 z-[9999] bg-black/80 flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
           <div className="w-12 h-12 border-4 border-gray-300 border-t-blue-600 rounded-full animate-spin"></div>

@@ -6,6 +6,7 @@ import {
 } from "../../../api/registerApi";
 import { useSelector } from "react-redux";
 import { useRegistration } from "../../../context/RegistrationContext";
+import toast from "react-hot-toast";
 
 const MfaVerification = ({ onBack, method,onNext }) => {
   const inputRefs = useRef([]);
@@ -22,7 +23,7 @@ const MfaVerification = ({ onBack, method,onNext }) => {
 
   const handleChange = (value, index) => {
     if (!/^\d*$/.test(value)) return;
-    
+    setRegisterErrorMsg('')
     const digit = value.slice(-1);
 
     const newOtp = [...otp];
@@ -69,12 +70,12 @@ const MfaVerification = ({ onBack, method,onNext }) => {
         throw new Error("Invalid MFA method");
       }
 
-      console.log("MFA verification success:", response);
+      
 
       // Registration completed.
-      // You can redirect here.
+      
       onNext();
-      alert("Registration completed successfully!");
+      toast.success("Registration completed successfully!");
     } catch (error) {
       console.error(error);
       setRegisterErrorMsg(error.message)

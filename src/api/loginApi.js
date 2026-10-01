@@ -159,3 +159,24 @@ export const forgotPassword = async (email) => {
   
     return data;
   };
+
+  export const logoutUser = async () => {
+    const response = await fetch(
+      `${API_BASE_URL}/signin/logout`,
+      {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  
+    const data = await response.json();
+  
+    if (!response.ok) {
+      throw new Error(data.message || "Failed to logout");
+    }
+  
+    return data;
+  };

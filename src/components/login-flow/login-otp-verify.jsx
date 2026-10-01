@@ -13,7 +13,8 @@ const LoginOtpVerify = () => {
         handleVerify,
         loginLoading,
         errormsg,
-        user
+        user,
+        setErrorMsg
 
     } = useLogin();
 
@@ -29,7 +30,7 @@ const LoginOtpVerify = () => {
   
     const handleChange = (value, index) => {
       if (!/^\d*$/.test(value)) return;
-  
+      setErrorMsg('')
       const digit = value.slice(-1);
   
       const newOtp = [...otp];
