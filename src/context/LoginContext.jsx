@@ -13,12 +13,31 @@ export const LoginProvider = ({ children }) => {
   const [isLoginError, setIsLoginError]=useState(false);
   const [errormsg,setErrorMsg]=useState('')
   const [loginLoading,setLoginLoding]=useState(false);
-
+  const [user, setUser] = useState(null);
 
   const handleClick = async(step)=>{
     try{
       setLoginLoding(true)
-      await login(email,password)
+      const response = await login(email, password);
+
+      // Save user information
+      if (response?.user) {
+        setUser(response.user);
+      }
+
+      // Auto select MFA method returned by backend
+      if (response?.mfaMethod) {
+        const method =
+          response.mfaMethod === "authenticator"
+            ? "Authenticator"
+            : response.mfaMethod === "sms"
+            ? "SMS"
+            : response.mfaMethod === "email"
+            ? "Email"
+            : response.mfaMethod;
+
+        setSelectedMethod(method);
+      }
       await setNextStep(step)
       
     }catch(error){
@@ -70,7 +89,9 @@ export const LoginProvider = ({ children }) => {
         handleContinue,
         handleVerify,
         errormsg,
-        loginLoading
+        loginLoading,
+        user,
+        setUser,
         
       }}
     >

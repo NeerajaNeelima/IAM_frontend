@@ -12,7 +12,8 @@ const LoginOtpVerify = () => {
         selectedMethod,
         handleVerify,
         loginLoading,
-        errormsg
+        errormsg,
+        user
 
     } = useLogin();
 
@@ -169,6 +170,18 @@ const LoginOtpVerify = () => {
       // API call for resend can go here
       console.log("Verification code resent");
     };
+
+    const getVerificationTarget = () => {
+      if (selectedMethod === "Email") {
+        return user?.email || "";
+      }
+    
+      if (selectedMethod === "SMS") {
+        return `${user?.countryCode || ""} ${user?.mobileNumber || ""}`;
+      }
+    
+      return "your authenticator app";
+    };
   
     return (
       <>
@@ -210,7 +223,7 @@ const LoginOtpVerify = () => {
             <div className="text-gray-700  font-semibold">
               We have sent a 6-digit code to
             </div>
-            <div className="font-bold ">{selectedMethod}</div>
+            <div className="font-bold ">{getVerificationTarget()}</div>
           </div>
         </div>
   

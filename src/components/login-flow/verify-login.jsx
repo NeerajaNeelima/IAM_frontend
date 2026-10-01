@@ -10,7 +10,8 @@ const VerifyLogin = () => {
         selectedMethod,
         setSelectedMethod,
         handleContinue,
-        loginLoading
+        loginLoading,
+        
     }=useLogin();
     
 
