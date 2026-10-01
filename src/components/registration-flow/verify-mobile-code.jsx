@@ -211,6 +211,7 @@ const VerifyMobileCode = ({onNext}) => {
   // RESEND CODE
   // -------------------------
   const handleResend = async() => {
+    setIsResending(true)
     setOtp(Array(6).fill(""));
     setIsError(false);
 
@@ -224,6 +225,7 @@ const VerifyMobileCode = ({onNext}) => {
     }, 0);
     
     await sendMobileOtp(email)
+    await setIsResending(false)
   };
 
   return (
@@ -325,7 +327,13 @@ const VerifyMobileCode = ({onNext}) => {
             onClick={handleResend}
             className="font-semibold rounded  w-1/2 bg-blue-600 text-white py-3  "
           >
-            Resend New Code
+            {isResending ? (
+            <div className="flex justify-center items-center gap-2">
+              <div className="h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+            </div>
+          ) : (
+            "Resend New code"
+          )}
           </button>
         )}
       </div>

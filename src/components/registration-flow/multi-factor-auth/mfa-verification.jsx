@@ -46,13 +46,6 @@ const MfaVerification = ({ onBack, method,onNext }) => {
 
   const handleVerify = async (enteredOtp) => {
     
-   
-    
-    // if (timeLeft <= 0) {
-    //   setIsError(true);
-
-    //   return;
-    // }
     setLoading(true)
 
     try {
@@ -238,7 +231,7 @@ const MfaVerification = ({ onBack, method,onNext }) => {
         <div className="font-semibold text-red-500"> Code has expired </div>
       )}
 
-      {/* Can't access */}
+     
       <button
         type="button"
         className="font-bold text-[#354ED9] hover:underline"

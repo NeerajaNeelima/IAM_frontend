@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
-import { verifyEmailOtp, sendMobileOtp} from "../../api/registerApi";
+import { verifyEmailOtp, sendMobileOtp,sendEmailOtp} from "../../api/registerApi";
 
 import { useRegistration } from "../../context/RegistrationContext";
 
@@ -14,6 +14,8 @@ const VerifyEmailCode = ({ onNext }) => {
   const [otp, setOtp] = useState(Array(6).fill(""));
   const [isError, setIsError] = useState(false);
   const [isVerifying, setIsVerifying] = useState(false);
+  const [isLoading,setIsLoading]=useState(false)
+  
 
   const [expiryTime, setExpiryTime] = useState(155); // 02:45 minutes
   const [resendTime, setResendTime] = useState(25); // 25 seconds
@@ -163,6 +165,27 @@ const VerifyEmailCode = ({ onNext }) => {
     setTimeout(() => {
       inputRefs.current[0]?.focus();
     }, 0);
+
+    handleSubmit();
+
+  };
+
+  const handleSubmit = async () => {
+   
+  
+    try {
+      setIsLoading(true);
+  
+      const response = await sendEmailOtp(registrationData);
+  
+      toast.success(response.message);
+  
+      onNext();
+    } catch (error) {
+      toast.error(error.message || "Failed to send email OTP");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleVerify = async (enteredOtp) => {
@@ -295,7 +318,13 @@ const VerifyEmailCode = ({ onNext }) => {
             onClick={handleResend}
             className="font-semibold rounded  w-1/2 bg-blue-600 text-white py-3  "
           >
-            Resend New Code
+           {isLoading ? (
+            <div className="flex justify-center items-center gap-2">
+              <div className="h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+            </div>
+          ) : (
+            "Resend New code"
+          )}
           </button>
         )}
       </div>

@@ -14,7 +14,8 @@ const LoginOtpVerify = () => {
         loginLoading,
         errormsg,
         user,
-        setErrorMsg
+        setErrorMsg,
+        handleContinue
 
     } = useLogin();
 
@@ -27,7 +28,7 @@ const LoginOtpVerify = () => {
   
     const [expiryTime, setExpiryTime] = useState(155); // 02:45 minutes
     const [resendTime, setResendTime] = useState(25); // 25 seconds
-  
+  const [isResending, setIsResending] = useState(false);
     const handleChange = (value, index) => {
       if (!/^\d*$/.test(value)) return;
       setErrorMsg('')
@@ -73,10 +74,7 @@ const LoginOtpVerify = () => {
       const lastIndex = Math.min(pastedValue.length - 1, 5);
       inputRefs.current[lastIndex]?.focus();
   
-      // Validate complete code
-      // if (pastedValue.length === 6) {
-      //   setIsError(pastedValue !== code);
-      // }
+      
     };
   
     const handleKeyDown = (e, index) => {
@@ -155,7 +153,8 @@ const LoginOtpVerify = () => {
     // -------------------------
     // RESEND CODE
     // -------------------------
-    const handleResend = () => {
+    const handleResend = async() => {
+      setIsResending(true)
       setOtp(Array(6).fill(""));
       setIsError(false);
   
@@ -168,8 +167,8 @@ const LoginOtpVerify = () => {
         inputRefs.current[0]?.focus();
       }, 0);
   
-      // API call for resend can go here
-      console.log("Verification code resent");
+      await handleContinue('otp-verify',selectedMethod)
+      await setIsResending(false)
     };
 
     const getVerificationTarget = () => {
@@ -295,7 +294,13 @@ const LoginOtpVerify = () => {
               onClick={handleResend}
               className="font-semibold rounded  w-1/2 bg-blue-600 text-white py-3  "
             >
-              Resend New Code
+              {isResending ? (
+            <div className="flex justify-center items-center gap-2">
+              <div className="h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+            </div>
+          ) : (
+            "Resend New code"
+          )}
             </button>
           )}
         </div>
