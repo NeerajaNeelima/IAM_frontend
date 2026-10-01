@@ -9,6 +9,7 @@ export const RegistrationProvider = ({ children }) => {
   const [mobileNumber, setMobileNumber] = useState('');
   const [country, setCountry] = useState("IN");
   const [isLoadingQRCode,setIsLoadingQRCode]=useState(false)
+  const [loading,setLoading]=useState(false)
   const [registererrormsg,setRegisterErrorMsg]=useState('')
   // Authenticator setup data
   const [qrCode, setQrCode] = useState("");
@@ -36,7 +37,10 @@ export const RegistrationProvider = ({ children }) => {
         setSetupKey,
 
         setRegisterErrorMsg,
-        registererrormsg
+        registererrormsg,
+
+        setLoading,
+        loading
       }}
     >
       {children}

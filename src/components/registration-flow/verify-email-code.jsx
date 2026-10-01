@@ -10,7 +10,7 @@ const VerifyEmailCode = ({ onNext }) => {
  
 
   const inputRefs = useRef([]);
-  const {registererrormsg,setRegisterErrorMsg}=useRegistration();
+  const {registererrormsg,setRegisterErrorMsg,loading}=useRegistration();
   const [otp, setOtp] = useState(Array(6).fill(""));
   const [isError, setIsError] = useState(false);
   const [isVerifying, setIsVerifying] = useState(false);
@@ -200,6 +200,17 @@ const VerifyEmailCode = ({ onNext }) => {
   };
 
   return (
+    <>
+    {loading && (
+      <div className="fixed inset-0 z-[9999] bg-black/80 flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-12 h-12 border-4 border-gray-300 border-t-blue-600 rounded-full animate-spin"></div>
+          <p className="text-white font-semibold text-lg">
+            Verifying...
+          </p>
+        </div>
+      </div>
+    )}
     <div className="flex flex-col justify-center max-w-xl mx-auto items-center gap-4 relative">
       <div
         className={` md:w-20 md:h-20 h-16 w-16 my-8 md:my-0 rounded-full ${
@@ -298,6 +309,7 @@ const VerifyEmailCode = ({ onNext }) => {
 
       
     </div>
+    </>
   );
 };
 

@@ -171,6 +171,17 @@ const LoginOtpVerify = () => {
     };
   
     return (
+      <>
+      {loginLoading && (
+      <div className="fixed inset-0 z-[9999] bg-black/80 flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-12 h-12 border-4 border-gray-300 border-t-blue-600 rounded-full animate-spin"></div>
+          <p className="text-white font-semibold text-lg">
+            Verifying...
+          </p>
+        </div>
+      </div>
+    )}
       <div className="flex flex-col justify-center min-h-[calc(100vh)] md:min-h-screen max-w-xl mx-auto items-center gap-4 relative ">
         <div
           className={`md:w-20 md:h-20 w-16 h-16 my-8 rounded-full ${
@@ -220,7 +231,7 @@ const LoginOtpVerify = () => {
               onPaste={handlePaste}
               onKeyDown={(e) => handleKeyDown(e, index)}
               className={`
-                h-10 w-10 rounded-lg border-2 px-4 text-center text-lg font-semibold
+                h-11 w-11 rounded-lg border-2 px-4 text-center text-lg font-semibold
                 outline-none transition-all duration-200
                 
   
@@ -284,6 +295,7 @@ const LoginOtpVerify = () => {
             2026 SecureID. All rights reserved.
         </div>
       </div>
+      </>
     );
 };
 

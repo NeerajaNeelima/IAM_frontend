@@ -5,10 +5,11 @@ import {
   verifyEmailMfa,
 } from "../../../api/registerApi";
 import { useSelector } from "react-redux";
+import { useRegistration } from "../../../context/RegistrationContext";
 
 const MfaVerification = ({ onBack, method,onNext }) => {
   const inputRefs = useRef([]);
-
+  const {loading,registererrormsg,setRegisterErrorMsg,setLoading}=useRegistration();
   const [otp, setOtp] = useState(Array(6).fill(""));
   const [isError, setIsError] = useState(false);
   const [timeLeft, setTimeLeft] = useState(28);
@@ -51,6 +52,7 @@ const MfaVerification = ({ onBack, method,onNext }) => {
 
     //   return;
     // }
+    setLoading(true)
 
     try {
       setIsError(false);
@@ -75,9 +77,10 @@ const MfaVerification = ({ onBack, method,onNext }) => {
       alert("Registration completed successfully!");
     } catch (error) {
       console.error(error);
-
+      setRegisterErrorMsg(error.message)
       setIsError(true);
     } finally {
+      setLoading(false)
     }
   };
 
@@ -154,6 +157,17 @@ const MfaVerification = ({ onBack, method,onNext }) => {
   };
 
   return (
+    <>
+    {loading && (
+      <div className="fixed inset-0 z-[9999] bg-black/80 flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-12 h-12 border-4 border-gray-300 border-t-blue-600 rounded-full animate-spin"></div>
+          <p className="text-white font-semibold text-lg">
+            Verifying...
+          </p>
+        </div>
+      </div>
+    )}
     <div className="flex flex-col items-center justify-center gap-5">
       <div className="flex h-16 w-16 items-center justify-center rounded-full ">
         {isError ? (
@@ -206,7 +220,7 @@ const MfaVerification = ({ onBack, method,onNext }) => {
       {/* Error */}
       {isError && (
         <p className="-mt-2 text-sm font-semibold text-red-500">
-          Incorrect code
+          {registererrormsg}
         </p>
       )}
 
@@ -231,6 +245,7 @@ const MfaVerification = ({ onBack, method,onNext }) => {
         Can't access your app?
       </button>
     </div>
+    </>
   );
 };
 

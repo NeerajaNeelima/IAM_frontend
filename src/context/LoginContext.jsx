@@ -12,7 +12,8 @@ export const LoginProvider = ({ children }) => {
   const [nextStep,setNextStep]=useState('login');
   const [isLoginError, setIsLoginError]=useState(false);
   const [errormsg,setErrorMsg]=useState('')
-  const [loginLoading,setLoginLoding]=useState(false)
+  const [loginLoading,setLoginLoding]=useState(false);
+
 
   const handleClick = async(step)=>{
     try{
@@ -68,7 +69,8 @@ export const LoginProvider = ({ children }) => {
         isLoginError,
         handleContinue,
         handleVerify,
-        errormsg
+        errormsg,
+        loginLoading
         
       }}
     >
