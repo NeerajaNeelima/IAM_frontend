@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
-import { login,sendOTP,verifyOTP } from '../api/loginApi';
+import { login,sendOTP,verifyOTP,forgotPassword,verifyResetOtp,resetPassword } from '../api/loginApi';
 import toast from "react-hot-toast";
 
 const LoginContext = createContext(null);
@@ -15,6 +15,11 @@ export const LoginProvider = ({ children }) => {
   const [loginLoading,setLoginLoding]=useState(false);
   const [user, setUser] = useState(null);
   const [rememberMe, setRememberMe] = useState(false);
+
+  const [forgotEmail, setForgotEmail] = useState("");
+const [resetToken, setResetToken] = useState("");
+const [forgotPasswordLoading, setForgotPasswordLoading] = useState(false);
+const [forgotPasswordError, setForgotPasswordError] = useState("");
 
   const handleClick = async(step)=>{
     try{
@@ -71,30 +76,116 @@ export const LoginProvider = ({ children }) => {
     }
   }
 
+  const handleForgotPassword = async () => {
+    try {
+      setForgotPasswordLoading(true);
+      setForgotPasswordError("");
+  
+      const response = await forgotPassword(forgotEmail);
+  
+      toast.success(response.message);
+  
+      setNextStep("resetOtp");
+  
+    } catch (error) {
+      setForgotPasswordError(error.message);
+    } finally {
+      setForgotPasswordLoading(false);
+    }
+  };
 
+  const handleVerifyResetOtp = async (otp) => {
+    try {
+      setForgotPasswordLoading(true);
+      setForgotPasswordError("");
+  
+      const response = await verifyResetOtp(
+        forgotEmail,
+        otp
+      );
+  
+      setResetToken(response.resetToken);
+  
+      setNextStep("resetPassword");
+  
+    } catch (error) {
+      setForgotPasswordError(error.message);
+    } finally {
+      setForgotPasswordLoading(false);
+    }
+  };
+
+  const handleResetPassword = async (
+    newPassword,
+    confirmPassword
+  ) => {
+    try {
+      setForgotPasswordLoading(true);
+      setForgotPasswordError("");
+  
+      const response = await resetPassword(
+        resetToken,
+        newPassword,
+        confirmPassword
+      );
+  
+      toast.success(response.message);
+  
+      setForgotEmail("");
+      setResetToken("");
+  
+      setNextStep("login");
+  
+    } catch (error) {
+      setForgotPasswordError(error.message);
+    } finally {
+      setForgotPasswordLoading(false);
+    }
+  };
   
   return (
     <LoginContext.Provider
       value={{
         
+        //Login details
         email,
         setEmail,
         password,
         setPassword,
+
+        // MFA method
         selectedMethod,
         setSelectedMethod,
+
+        //Login state
         nextStep,
         setNextStep,
+
+        // Login functions and effects
         handleClick,
         isLoginError,
         handleContinue,
         handleVerify,
         errormsg,
         loginLoading,
+
+        //User Details
         user,
         setUser,
+
+        //Remember Me feature
         rememberMe,
-    setRememberMe,
+        setRememberMe,
+
+        //forget password
+        forgotEmail,
+        setForgotEmail,
+        resetToken,
+        forgotPasswordLoading,
+        forgotPasswordError,
+        handleForgotPassword,
+        handleVerifyResetOtp,
+        handleResetPassword,
         
       }}
     >

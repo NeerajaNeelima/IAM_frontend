@@ -19,7 +19,8 @@ const LoginForm = () => {
         handleClick,
         loginLoading,
         rememberMe,
-  setRememberMe,
+        setRememberMe,
+        setNextStep
     } = useLogin();
 
   return (
@@ -117,7 +118,7 @@ const LoginForm = () => {
                         </label>
                         <div className='text-gray-400 font-medium text-sm'>Remember me</div>
                     </div>
-                    <div className='text-blue-600 text-sm font-medium'>Forgot password?</div>
+                    <div onClick={() => setNextStep("forgotPassword")} className='text-blue-600 text-sm font-medium'>Forgot password?</div>
                 </div>
 
                 <button

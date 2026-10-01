@@ -88,3 +88,74 @@ export const getCurrentUser = async () => {
     const data = await response.json();
     return data;
 };
+
+
+export const forgotPassword = async (email) => {
+    const response = await fetch(
+      `${process.env.REACT_APP_API_BASE_URL}/signin/forgot-password`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+        }),
+      }
+    );
+  
+    const data = await response.json();
+  
+    return data;
+  };
+  
+  
+  export const verifyResetOtp = async (email, otp) => {
+    const response = await fetch(
+      `${process.env.REACT_APP_API_BASE_URL}/signin/verify-reset-otp`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          otp,
+        }),
+      }
+    );
+  
+    const data = await response.json();
+  
+    
+  
+    return data;
+  };
+  
+  
+  export const resetPassword = async (
+    resetToken,
+    newPassword,
+    confirmPassword
+  ) => {
+    const response = await fetch(
+      `${process.env.REACT_APP_API_BASE_URL}/signin/reset-password`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          resetToken,
+          newPassword,
+          confirmPassword,
+        }),
+      }
+    );
+  
+    const data = await response.json();
+  
+    
+  
+    return data;
+  };

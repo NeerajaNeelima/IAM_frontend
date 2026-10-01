@@ -6,6 +6,9 @@ import LoginOtpVerify from "./login-otp-verify";
 import { useLogin } from "../../context/LoginContext";
 import Profile from "../profile/profile";
 import { getCurrentUser } from "../../api/loginApi";
+import ForgotPassword from "./forgetPassword";
+import ResetPassword from "./reset-password";
+import ResetPasswordOtp from "./reset-password-otp";
 
 const Login = () => {
   const { nextStep, isLoginError,setUser,setNextStep } = useLogin();
@@ -40,6 +43,15 @@ const Login = () => {
 
       case "profile":
         return <Profile/>;
+
+      case "forgotPassword":
+        return <ForgotPassword/>;
+      
+      case "resetOtp":
+        return <ResetPasswordOtp/>
+
+      case "resetPassword":
+        return <ResetPassword/>
 
       default:
         return <LoginForm />;
