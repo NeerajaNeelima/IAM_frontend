@@ -47,7 +47,7 @@ export const sendOTP = async (selectedMethod) => {
     return data;
 };
 
-export const verifyOTP = async (selectedMethod,otp) => {
+export const verifyOTP = async (selectedMethod,otp,rememberMe) => {
     
     const response = await fetch(
         `${API_BASE_URL}/signin/verify-otp`,
@@ -58,7 +58,7 @@ export const verifyOTP = async (selectedMethod,otp) => {
             },
             credentials: "include",
             body: JSON.stringify({
-               selectedMethod,otp
+               selectedMethod,otp,rememberMe
             }),
         }
     );
@@ -71,5 +71,20 @@ export const verifyOTP = async (selectedMethod,otp) => {
         );
     } 
 
+    return data;
+};
+
+export const getCurrentUser = async () => {
+    
+    const response = await fetch(
+        `${API_BASE_URL}/signin/auth-user`,
+        {
+            method: "GET",
+            credentials: "include",
+            
+        }
+    );
+
+    const data = await response.json();
     return data;
 };

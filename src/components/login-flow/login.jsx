@@ -1,12 +1,31 @@
-import React from "react";
+import React,{useEffect} from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import LoginForm from "./login-form";
 import VerifyLogin from "./verify-login";
 import LoginOtpVerify from "./login-otp-verify";
 import { useLogin } from "../../context/LoginContext";
+import Profile from "../profile/profile";
+import { getCurrentUser } from "../../api/loginApi";
 
 const Login = () => {
-  const { nextStep, isLoginError } = useLogin();
+  const { nextStep, isLoginError,setUser,setNextStep } = useLogin();
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const response = await getCurrentUser();
+  
+        if (response.authenticated) {
+          setUser(response.user);
+          setNextStep("profile");
+        }
+      } catch {
+        setNextStep("login");
+      }
+    };
+  
+    checkAuth();
+  }, []);
 
   const renderStep = () => {
     switch (nextStep) {
@@ -18,6 +37,9 @@ const Login = () => {
 
       case "otp-verify":
         return <LoginOtpVerify />;
+
+      case "profile":
+        return <Profile/>;
 
       default:
         return <LoginForm />;

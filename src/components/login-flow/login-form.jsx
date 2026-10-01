@@ -18,6 +18,8 @@ const LoginForm = () => {
         setPassword,
         handleClick,
         loginLoading,
+        rememberMe,
+  setRememberMe,
     } = useLogin();
 
   return (
@@ -80,7 +82,10 @@ const LoginForm = () => {
                     <div className='flex gap-3 items-center'>
                         <label className="relative inline-flex items-center cursor-pointer">
                             <input
+                               
                                 type="checkbox"
+                                checked={rememberMe}
+                                onChange={(e) => setRememberMe(e.target.checked)}
                                 className="
                                 peer
                                 appearance-none

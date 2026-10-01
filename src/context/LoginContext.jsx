@@ -14,6 +14,7 @@ export const LoginProvider = ({ children }) => {
   const [errormsg,setErrorMsg]=useState('')
   const [loginLoading,setLoginLoding]=useState(false);
   const [user, setUser] = useState(null);
+  const [rememberMe, setRememberMe] = useState(false);
 
   const handleClick = async(step)=>{
     try{
@@ -62,7 +63,7 @@ export const LoginProvider = ({ children }) => {
   const handleVerify = async(selectedMethod,otp)=>{
     try{
       setLoginLoding(true)
-    await verifyOTP(selectedMethod,otp)}
+    await verifyOTP(selectedMethod,otp,rememberMe)}
     catch(error){
       setErrorMsg(error.message)
     }finally{
@@ -92,6 +93,8 @@ export const LoginProvider = ({ children }) => {
         loginLoading,
         user,
         setUser,
+        rememberMe,
+    setRememberMe,
         
       }}
     >
